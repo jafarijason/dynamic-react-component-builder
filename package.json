@@ -1,7 +1,7 @@
 {
   "name": "dynamic-react-component-builder",
   "description": "Build react components",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Jason Jafari",
   "bin": {
     "drcb": "./run.sh"

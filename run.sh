@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export DRCB_DIR=(pwd)
+export DRCB_DIR=$(pwd)
 
 echo "DRCB_DIR $DRCB_DIR"
 
