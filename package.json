@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "author": "Jason Jafari",
   "bin": {
-    "drcb": "./bin/run.js"
+    "drcb": "./run.sh"
   },
   "bugs": "https://github.com/jafarijason/dynamic-react-component-builder/issues",
   "dependencies": {},
