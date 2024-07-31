@@ -53,6 +53,14 @@ for (const componentKey of Object.keys(componentsObj)) {
             noError: true
         })
     }
+    const isReady = `${tmpCommitFolder}/isReady`
+    if (!fs.existsSync(isReady)) {
+        console.log(`${isReady} is not exist, adding`)
+        await bashRunAndShowLogsPromise({
+            command: `(cd ${commitFolder}/~~tmp;  touch isReady)`,
+            noError: true
+        })
+    }
 }
 
 // console.log(componentsObj)
