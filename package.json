@@ -1,13 +1,18 @@
 {
   "name": "dynamic-react-component-builder",
   "description": "Build react components",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "author": "Jason Jafari",
   "bin": {
     "drcb": "./run.sh"
   },
   "bugs": "https://github.com/jafarijason/dynamic-react-component-builder/issues",
-  "dependencies": {},
+  "dependencies": {
+    "fs-extra": "^11.2.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "shelljs": "^0.8.5"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },

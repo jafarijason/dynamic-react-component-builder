@@ -14,7 +14,7 @@ DRCB_MODULE_DIR=$(dirname "$(realpath "$0")")
 # # Convert the directory to an absolute path
 # DRCB_MODULE_DIR=$(cd "$DRCB_MODULE_DIR" && pwd)
 
-echo "The script is located in: $DRCB_MODULE_DIR"
+# echo "The script is located in: $DRCB_MODULE_DIR"
 
 
 
