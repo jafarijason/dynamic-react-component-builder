@@ -23,22 +23,29 @@ for (const componentKey of Object.keys(componentsObj)) {
         project: componentKey.split('##')[0],
         compKeyFolder: componentKey.split('##')[1]
     }
-    const repoDirectory = `${process.env.DRCB_DATA_DIR}/components/${componentObj.project}/${componentObj.compKeyFolder}`
-    if (!fs.existsSync(repoDirectory)) {
-        console.log(`${repoDirectory} is not exist, creating`)
+    let repoDirectoryParent = `${process.env.DRCB_DATA_DIR}/components/${componentObj.project}/${componentObj.compKeyFolder}`
+    if(componentObj?.repoDirectoryParentDevOnly){
+        repoDirectoryParent = `${process.env.HOME}/${componentObj?.repoDirectoryParentDevOnly}`
+    }
+    if (!fs.existsSync(repoDirectoryParent)) {
+        console.log(`${repoDirectoryParent} is not exist, creating`)
         await bashRunAndShowLogsPromise({
-            command: `mkdir -p ${repoDirectory}`,
+            command: `mkdir -p ${repoDirectoryParent}`,
         })
     }
-    const commitFolder = `${repoDirectory}/${componentObj.commit}`
+    let commit = componentObj.commit
+    if(componentObj.commitAliasDevOnly){
+        commit = componentObj.commitAliasDevOnly
+    }
+    const commitFolder = `${repoDirectoryParent}/${commit}`
     if (!fs.existsSync(commitFolder)) {
         console.log(`${commitFolder} is not exist, cloning`)
         await bashRunAndShowLogsPromise({
-            command: `(cd ${repoDirectory}; git -c advice.detachedHead=false  clone ${componentObj.repository} ${componentObj.commit} ; cd ${componentObj.commit}; git checkout ${componentObj.commit})`,
+            command: `(cd ${repoDirectoryParent}; git -c advice.detachedHead=false  clone ${componentObj.repository} ${commit} ; cd ${commitFolder}; git checkout ${componentObj.commit})`,
             noError: true
         })
     }
-    const tmpCommitFolder = `${repoDirectory}/${componentObj.commit}/~~tmp`
+    const tmpCommitFolder = `${commitFolder}/~~tmp`
     if (!fs.existsSync(tmpCommitFolder)) {
         console.log(`${tmpCommitFolder} is not exist, creating`)
         await bashRunAndShowLogsPromise({
