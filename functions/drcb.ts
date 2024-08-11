@@ -14,7 +14,7 @@ export const drcb = async () => {
 
 
     const drcbConfigText = fs.readFileSync(drcbConfigFile, 'utf8');
-    const drcbConfig: any = YAML.load(drcbConfigText)
+    const drcbConfig = YAML.load(drcbConfigText)
 
     const componentsObj = drcbConfig.components
 
