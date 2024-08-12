@@ -59,7 +59,10 @@ export const drcb = async () => {
             if (!fs.existsSync(isInstalledFile)) {
                 console.log(`${isInstalledFile} is not exist, installing packages`)
                 await bashRunAndShowLogsPromise({
-                    command: `(cd ${commitFolder}; ls -la;  ${componentObj.pkgManager} install; touch ~~tmp/isInstalledFile)`,
+                    command: `(cd ${commitFolder}; \
+                     ${componentObj.pkgManager} install; \
+                      ${componentObj.commandForPrepare} ;\
+                     touch ~~tmp/isInstalledFile)`,
                     noError: true
                 })
             }
@@ -89,7 +92,7 @@ export const drcbAddComponents = async (additionalComponentsObj) => {
     const drcbConfigText = fs.readFileSync(drcbConfigFile, 'utf8');
     const drcbConfig = YAML.load(drcbConfigText)
     const componentsObj = drcbConfig.components
-    Object.keys(additionalComponentsObj).forEach((compKey)=> {
+    Object.keys(additionalComponentsObj).forEach((compKey) => {
         componentsObj[compKey] = additionalComponentsObj[compKey]
     })
 
