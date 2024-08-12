@@ -4,8 +4,8 @@ import _ from 'lodash';
 import { bashRunAndShowLogsPromise } from './bashUtils';
 
 
+const drcbConfigFile = `${process.env.DRCB_DATA_DIR}/.drcbConfig.yml`
 export const drcb = async () => {
-    const drcbConfigFile = `${process.env.DRCB_DATA_DIR}/.drcbConfig.yml`
     // fs.writeFileSync(drcbConfigFile, YAML.dump({components: {}}, {}), "utf8")
     if (!fs.existsSync(drcbConfigFile)) {
         fs.writeFileSync(drcbConfigFile, YAML.dump({ components: {} }, {}), "utf8")
@@ -76,6 +76,24 @@ export const drcb = async () => {
             console.log(e.message)
         }
     }
+
+}
+
+export const drcbAddComponents = async (additionalComponentsObj) => {
+
+    if (!fs.existsSync(drcbConfigFile)) {
+        fs.writeFileSync(drcbConfigFile, YAML.dump({ components: {} }, {}), "utf8")
+        console.log(drcbConfigFile)
+    }
+
+    const drcbConfigText = fs.readFileSync(drcbConfigFile, 'utf8');
+    const drcbConfig = YAML.load(drcbConfigText)
+    const componentsObj = drcbConfig.components
+    Object.keys(additionalComponentsObj).forEach((compKey)=> {
+        componentsObj[compKey] = additionalComponentsObj[compKey]
+    })
+
+    fs.writeFileSync(drcbConfigFile, YAML.dump({ components: componentsObj }, {}), "utf8")
 
 }
 
