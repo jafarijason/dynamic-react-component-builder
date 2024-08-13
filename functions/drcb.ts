@@ -27,9 +27,6 @@ export const drcb = async () => {
                 compKeyFolder: componentKey.split('##')[1]
             }
             let repoDirectoryParent = `${process.env.DRCB_DATA_DIR}/components/${componentObj.project}/${componentObj.compKeyFolder}`
-            if (componentObj?.repoDirectoryParentDevOnly) {
-                repoDirectoryParent = `${process.env.HOME}/${componentObj?.repoDirectoryParentDevOnly}`
-            }
             if (!fs.existsSync(repoDirectoryParent)) {
                 console.log(`${repoDirectoryParent} is not exist, creating`)
                 await bashRunAndShowLogsPromise({
@@ -58,9 +55,15 @@ export const drcb = async () => {
             const isInstalledFile = `${tmpCommitFolder}/isInstalledFile`
             if (!fs.existsSync(isInstalledFile)) {
                 console.log(`${isInstalledFile} is not exist, installing packages`)
+                // await bashRunAndShowLogsPromise({
+                //     command: `(cd ${commitFolder}; \
+                //      ${componentObj.pkgManager} install; \
+                //       ${componentObj.commandForPrepare} ;\
+                //      touch ~~tmp/isInstalledFile)`,
+                //     noError: true
+                // })
                 await bashRunAndShowLogsPromise({
                     command: `(cd ${commitFolder}; \
-                     ${componentObj.pkgManager} install; \
                       ${componentObj.commandForPrepare} ;\
                      touch ~~tmp/isInstalledFile)`,
                     noError: true
